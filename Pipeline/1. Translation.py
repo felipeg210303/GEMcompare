@@ -5,8 +5,8 @@ import cobra
 from cobra.io import write_sbml_model
 import os
 
-model_path = "C:\\Users\\felip\\Desktop\\python\\B.-subtilis-FBA\\Pan-genomic model\\modelo_salida.xml" #Path to your model file
-output_path = "C:\\Users\\felip\\Desktop\\python\\B.-subtilis-FBA\\Translated Models (to BiGG)\\mergem_pan_model_bigg.xml" #Path where you want to save the translated model file
+model_path = "B.-subtilis-FBA\\Initial models\\iYO844\\iYO844.xml" #Path to your model file
+output_path = "C:\\Users\\felip\\Desktop\\python\\B.-subtilis-FBA\\iYO844\\iYO844_bigg.xml" #Path where you want to save the translated model file
 
 model = cobra.io.read_sbml_model(model_path) #Charge the model
 

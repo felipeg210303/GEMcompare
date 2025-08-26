@@ -1,51 +1,97 @@
 import cobra
-from cobra.io import read_sbml_model
-import matplotlib.pyplot as plt
+import pandas as pd
 
-def run_fba():
-    # Cargar el modelo de la carpeta 
-    model = read_sbml_model("C:/Users/felip/Desktop/python/TESIS/iYO844.xml")
+# ================================
+# 1) Cargar tu modelo
+# ================================
+# Cambia la ruta/archivo a tu modelo real (.xml/.json/.mat) 
+model = cobra.io.read_sbml_model("B.-subtilis-FBA\\Initial models\\iBsu1103v2\\iBsu1103v2.xml")
 
-    # límite inferior de todas las reacciones
-    for reaction in model.reactions:
-        reaction.lower_bound = -0.68
-    # Prohibir importación de otros substratos además del que le voy a poner
-    for reaction in model.exchanges:
-        reaction.lower_bound = 0
-    
-    # medio mínimo
-    model.reactions.get_by_id("EX_o2_LSQBKTe_RSQBKT").lower_bound = -18
-    model.reactions.get_by_id("EX_succ_LSQBKTe_RSQBKT").lower_bound = -0
-    model.reactions.get_by_id("EX_succ_LSQBKTe_RSQBKT").lower_bound = -8.71
+# ================================
+# 2) Utilidades
+# ================================
+def set_bounds_if_present(m, rxn_id, lb, ub):
+    """Asigna bounds si la reacción existe; si no, lo reporta."""
+    try:
+        rxn = m.reactions.get_by_id(rxn_id)
+        rxn.bounds = (lb, ub)
+    except KeyError:
+        print(f"[ADVERTENCIA] No existe la reacción '{rxn_id}' en el modelo.")
 
+def preparar_medio_base(m):
+    """
+    Cierra uptake en TODOS los exchanges y configura el medio base
+    exactamente como en tu tabla, pero con D-Glucosa en 0 para
+    'reemplazarla' por la(s) fuente(s) que probaremos en cada condición.
+    """
+    # 2.1 Cerrar uptake por defecto
+    # for ex in m.exchanges:
+    #     ex.lower_bound = 0.0  # sin entrada a menos que la abramos explícitamente
 
-    solution = model.optimize() 
+    # 2.2 Abrir lo que definiste en el medio
+    set_bounds_if_present(m, "EX_h2o_e",  -1000.0, 1000.0)  # H2O
+    set_bounds_if_present(m, "EX_o2_e",      -18.0,    0.0)  # O2
+    set_bounds_if_present(m, "EX_pi_e",       -5.0,  1000.0)  # Orthophosphate
+    set_bounds_if_present(m, "EX_co2_e",   -1000.0, 1000.0)  # CO2
+    set_bounds_if_present(m, "EX_nh4_e",      -5.0,  1000.0)  # NH3
+    set_bounds_if_present(m, "EX_so4_e",      -5.0,  1000.0)  # Sulfate
+    set_bounds_if_present(m, "EX_ca2_e",   -1000.0, 1000.0)  # Calcium
+    set_bounds_if_present(m, "EX_h_e",     -1000.0, 1000.0)  # H+
+    set_bounds_if_present(m, "EX_k_e",     -1000.0, 1000.0)  # Potassium
+    set_bounds_if_present(m, "EX_mg2_e",   -1000.0, 1000.0)  # Magnesium
+    set_bounds_if_present(m, "EX_na1_e",   -1000.0, 1000.0)  # Sodium
+    set_bounds_if_present(m, "EX_fe3_e",   -1000.0, 1000.0)  # Fe3+
 
- # para visualizar los flujos metabólicos
-    fluxes = solution.fluxes
+    # Importante: apagar glucosa del medio base para "reemplazarla"
+    set_bounds_if_present(m, "EX_glc__D_e", 0.0, 1000.0)     # D-Glucose
 
-    #Graficar los flujos metabólicos 
-    # plt.figure(figsize=(10, 6))
-    # fluxes.plot(kind="barh", color="orange")
-    # plt.axvline(0, color='grey', lw=0.8)
-    # plt.title("Flujos de Reacción en Bacillus subtilis")
-    # plt.xlabel("Flujo")
-    # plt.ylabel("Reacciones")
-    # plt.grid(axis='x')
-    # plt.show()
-    # # print(model.summary())
-    
-    print(f"Valor de la función objetivo (biomasa): {solution.objective_value}")
-    # Detectar reacciones bloqueadas
-    # blocked_reactions = cobra.flux_analysis.find_blocked_reactions(model)
-    # print(f"Reacciones bloqueadas: {blocked_reactions}")
+def aplicar_fuentes_carbono(m, pares_rxn_uptake):
+    """
+    Activa la(s) fuente(s) de carbono de una condición dada.
+    'pares_rxn_uptake' es lista de (rxn_id_BiGG, uptake_positivo),
+    y aquí se aplica como lower_bound = -uptake (convención FBA).
+    """
+    for rxn_id, uptake_pos in pares_rxn_uptake:
+        set_bounds_if_present(m, rxn_id, float(uptake_pos), 1000.0)
 
-    # # Verificar condiciones actuales del medio
-    # print("\nCondiciones actuales del medio:")
-    # for reaction in model.exchanges:
-    #     if reaction.lower_bound < -1:
-    #         print(f"{reaction.id}: {reaction.lower_bound} mmol/gDW/h")
+# ================================
+# 3) Tabla de condiciones EXACTAS que pediste
+#    (IDs BiGG entre paréntesis)
+# ================================
+condiciones = {
+    "Glucosa":                    [("EX_glc__D_e", -7.63)],             # D-Glucose
+    "Gluconato":                  [("EX_glcn_e",   -5.13)],             # Gluconate
+    "Glicerol":                   [("EX_glyc_e",   -6.22)],             # Glycerol
+    "Malato":                     [("EX_mal__L_e",-26.51)],             # L-Malate
+    "Malato; Glucosa":            [("EX_mal__L_e",-14.6),
+                                   ("EX_glc__D_e", -5.95)],
+    "Piruvato":                   [("EX_pyr_e",    -8.26)],             # Pyruvate
+    "Succinato; L-Glutamato":     [("EX_succ_e",   -3.35),              # Succinate
+                                   ("EX_glu__L_e", -2.21)],             # L-Glutamate
+    "Fructosa":                   [("EX_fru_e",    -5.72)],             # D-Fructose
+}
 
-# para evitar el error al usar multiprocessing
-if __name__ == "__main__":
-    run_fba()
+# ================================
+# 4) Ejecutar FBA por condición
+# ================================
+resultados = []
+for nombre, pares in condiciones.items():
+    m = model.copy()
+    preparar_medio_base(m)            # medio como el adjunto, sin glucosa base
+    aplicar_fuentes_carbono(m, pares) # activar la(s) fuente(s) de la condición
+    sol = m.optimize()
+    resultados.append({
+        "condicion": nombre,
+        "status": sol.status,
+        "biomasa": sol.objective_value
+    })
+
+df = pd.DataFrame(resultados).sort_values("biomasa", ascending=False)
+print(df.to_string(index=False))
+
+# (Opcional) inspeccionar flujos de una condición concreta:
+# m_dbg = model.copy()
+# preparar_medio_base(m_dbg)
+# aplicar_fuentes_carbono(m_dbg, condiciones["Malato; Glucosa"])
+# sol_dbg = m_dbg.optimize()
+# print(sol_dbg.fluxes.sort_values(ascending=False).head(20))

@@ -3,7 +3,7 @@
 
 import libsbml
 
-model_path = "C:/Users/felip/Desktop/python/TESIS/iBsu1103.xml" #Path to your model file
+model_path = "C:\\Users\\felip\\Desktop\\python\\B.-subtilis-FBA\\Initial models\\iYO844\\iYO844.xml" #Path to your model file
 
 reader = libsbml.SBMLReader() #Create a new reader object
 document = reader.readSBML(model_path) # Read the SBML file

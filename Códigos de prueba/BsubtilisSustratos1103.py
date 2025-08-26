@@ -1,59 +1,165 @@
+# multiproceso_cobrapy.py
+# -*- coding: utf-8 -*-
+import os
 import cobra
-from cobra.io import read_sbml_model
-import matplotlib.pyplot as plt
+import pandas as pd
+from typing import List, Tuple, Dict, Any
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
-def run_fba():
-    # Cargar el modelo de la carpeta 
-    model = read_sbml_model("C:/Users/felip/Desktop/python/TESIS/iBsu1103.xml")
 
-    # Prohibir importación de otros sustratos además del que le voy a poner
-    for reaction in model.exchanges:
-        reaction.lower_bound = -1
-    
-    
-    # medio mínimo
-    model.reactions.get_by_id("EX_cpd00007_e").lower_bound = -18 # oxígeno
-    # model.reactions.get_by_id("EX_cpd00007_e").upper_bound = 0 # anaerobiosis
- 
-    # model.reactions.get_by_id("EX_cpd00029_e").lower_bound = -8.71 # acetato
-    # model.reactions.get_by_id("R_EX_etoh_e").lower_bound = -8.71 # etanol
-    # model.reactions.get_by_id("EX_cpd00082_e").lower_bound = -8.71 # fructosa
-    # model.reactions.get_by_id("EX_cpd00106_e").lower_bound = -8.71 # fumarato
-    # model.reactions.get_by_id("EX_cpd00053_e").lower_bound = -8.71 # glutamina
-    # model.reactions.get_by_id("EX_cpd00023_e").lower_bound = -8.71 # glutamato
-    # model.reactions.get_by_id("EX_cpd00159_e").lower_bound = -8.71 # lactato
-    # model.reactions.get_by_id("EX_cpd00386_e").lower_bound = -8.71 # malato
-    # model.reactions.get_by_id("EX_cpd00020_e").lower_bound = -8.71 # piruvato
-    # model.reactions.get_by_id("EX_cpd00036_e").lower_bound = -8.71 # succinato
+def load_model_flexible(path: str) -> cobra.Model:
+    """
+    Intenta cargar un modelo con diferentes readers según extensión.
+    Soporta: .xml/.sbml (SBML) y .json (Cobra JSON).
+    Si necesitas .mat u otro formato, añade el loader correspondiente.
+    """
+    ext = os.path.splitext(path)[1].lower()
+    if ext in [".xml", ".sbml"]:
+        return cobra.io.read_sbml_model(path)
+    elif ext in [".json"]:
+        # cobra tiene load_json_model en algunas versiones; si falla, probar read_json_model
+        try:
+            return cobra.io.load_json_model(path)   # preferible si existe
+        except Exception:
+            return cobra.io.load_json_model(path)   # fallback (si tu versión lo implementa así)
+    else:
+        raise ValueError(f"Extensión '{ext}' no soportada por este loader. "
+                         "Añade soporte para .mat u otros formatos si lo necesitas.")
 
-    model.reactions.get_by_id("EX_cpd00027_e").lower_bound = -10000 # glucosa
-    # model.reactions.get_by_id("EX_cpd00106_e").lower_bound = -8.71 # fumarato
-    # model.reactions.get_by_id("EX_cpd00009_e").lower_bound = -1 # fosfato
-    # model.reactions.get_by_id("EX_cpd00013_e").lower_bound = -1 # amonio
-    # model.reactions.get_by_id("EX_cpd00048_e").lower_bound = -1 # sulfato
-    # model.reactions.get_by_id("EX_cpd00205_e").lower_bound = -2 #potasio
-    # model.reactions.get_by_id("EX_cpd00254_e").lower_bound = -1 # magnesio
-    # model.reactions.get_by_id("EX_cpd00063_e").lower_bound = -1 # calcio
-    # model.reactions.get_by_id("EX_cpd00971_e").lower_bound = -2 # sodio
+# -------------------------
+# Fijar medio y condiciones
+# -------------------------
+def set_bounds_if_present(m: cobra.Model, rxn_id: str, lb: float, ub: float):
+    try:
+        rxn = m.reactions.get_by_id(rxn_id)
+        rxn.bounds = (lb, ub)
+    except KeyError:
+        # No detener ejecución, pero avisar para debug
+        # (puedes comentar el print si no quieres mensajes)
+        print(f"[WARN] reacción '{rxn_id}' no encontrada en el modelo '{m.id}'.")
 
-    solution = model.optimize() 
+def preparar_medio_base(m: cobra.Model):
+    # Cerrar uptake en todos los exchanges (por seguridad)
+    for ex in m.exchanges:
+        ex.lower_bound = 0.0
 
- # para visualizar los flujos metabólicos
-    fluxes = solution.fluxes
+    # Abrir las compuertas del medio base según tu tabla
+    set_bounds_if_present(m, "EX_h2o_e",  -1000.0, 1000.0)  # H2O
+    set_bounds_if_present(m, "EX_o2_e",      -18.0,    0.0)  # O2
+    set_bounds_if_present(m, "EX_pi_e",       -5.0,  1000.0)  # Orthophosphate
+    set_bounds_if_present(m, "EX_co2_e",   -1000.0, 1000.0)  # CO2
+    set_bounds_if_present(m, "EX_nh4_e",      -5.0,  1000.0)  # NH3
+    set_bounds_if_present(m, "EX_so4_e",      -5.0,  1000.0)  # Sulfate
+    set_bounds_if_present(m, "EX_ca2_e",   -1000.0, 1000.0)  # Calcium
+    set_bounds_if_present(m, "EX_h_e",     -1000.0, 1000.0)  # H+
+    set_bounds_if_present(m, "EX_k_e",     -1000.0, 1000.0)  # Potassium
+    set_bounds_if_present(m, "EX_mg2_e",   -1000.0, 1000.0)  # Magnesium
+    set_bounds_if_present(m, "EX_na1_e",   -1000.0, 1000.0)  # Sodium
+    set_bounds_if_present(m, "EX_fe3_e",   -1000.0, 1000.0)  # Fe3+
 
-    # # print(model.summary())
-    
-    print(f"Valor de la función objetivo (biomasa): {solution.objective_value}")
-    # Detectar reacciones bloqueadas
-    # blocked_reactions = cobra.flux_analysis.find_blocked_reactions(model)
-    # print(f"Reacciones bloqueadas: {blocked_reactions}")
+    # Apagar glucosa base para que la condición la ponga explícitamente
+    set_bounds_if_present(m, "EX_glc__D_e", 0.0, 1000.0)
 
-    # # Verificar condiciones actuales del medio
-    # print("\nCondiciones actuales del medio:")
-    # for reaction in model.exchanges:
-    #     if reaction.lower_bound < -1:
-    #         print(f"{reaction.id}: {reaction.lower_bound} mmol/gDW/h")
+def aplicar_fuentes_carbono(m: cobra.Model, pares_rxn_uptake: List[Tuple[str, float]]):
+    for rxn_id, uptake in pares_rxn_uptake:
+        set_bounds_if_present(m, rxn_id, -float(uptake), 1000.0)
 
-# para evitar el error al usar multiprocessing
+# -------------------------
+# Condiciones (tal como definiste)
+# -------------------------
+CONDICIONES = {
+    "Glucosa":                    [("EX_glc__D_e", 7.63)],
+    "Gluconato":                  [("EX_glcn__D_e",   5.13)],
+    "Glicerol":                   [("EX_glyc_e",   6.22)],
+    "Malato":                     [("EX_mal__L_e",26.51)],
+    "Malato; Glucosa":            [("EX_mal__L_e",14.6), ("EX_glc__D_e", 5.95)],
+    "Piruvato":                   [("EX_pyr_e",    8.26)],
+    "Succinato; L-Glutamato":     [("EX_succ_e",   3.35), ("EX_glu__L_e", 2.21)],
+    "Fructosa":                   [("EX_fru_e",    5.72)],
+}
+
+# -------------------------
+# Función por modelo
+# -------------------------
+def run_for_model(path: str, condiciones: Dict[str, List[Tuple[str, float]]]) -> pd.DataFrame:
+    """
+    Carga un modelo desde 'path', corre todas las condiciones y
+    devuelve un DataFrame con columnas: model_path, model_id, condition, status, biomass.
+    """
+    model = load_model_flexible(path)
+    # Opcional: asignar nombre legible
+    model.id = os.path.basename(path)
+    resultados = []
+    for cond_name, pares in condiciones.items():
+        mcopy = model.copy()
+        preparar_medio_base(mcopy)
+        aplicar_fuentes_carbono(mcopy, pares)
+        sol = mcopy.optimize()
+        resultados.append({
+            "model_path": path,
+            "model_id": model.id,
+            "condition": cond_name,
+            "status": sol.status,
+            "biomass": sol.objective_value
+        })
+    return pd.DataFrame(resultados)
+
+# -------------------------
+# Runner maestro
+# -------------------------
+def run_multiple_models(model_paths: List[str],
+                        condiciones: Dict[str, List[Tuple[str, float]]] = CONDICIONES,
+                        parallel: bool = False,
+                        max_workers: int = None) -> pd.DataFrame:
+    """
+    Corre run_for_model para cada ruta en model_paths.
+    Si parallel=True intentará usar multiprocessing (ProcessPoolExecutor).
+    Devuelve un DataFrame combinado.
+    """
+    dfs = []
+    if not parallel:
+        # Modo secuencial
+        for p in model_paths:
+            print(f"[INFO] Procesando (secuencial) {p} ...")
+            df = run_for_model(p, condiciones)
+            dfs.append(df)
+    else:
+        # Modo paralelo (cada proceso leerá su modelo desde disco)
+        print(f"[INFO] Procesando en paralelo {len(model_paths)} modelos ...")
+        with ProcessPoolExecutor(max_workers=max_workers) as ex:
+            futures = {ex.submit(run_for_model, p, condiciones): p for p in model_paths}
+            for fut in as_completed(futures):
+                p = futures[fut]
+                try:
+                    df = fut.result()
+                    dfs.append(df)
+                    print(f"[INFO] Terminado {p}")
+                except Exception as e:
+                    print(f"[ERROR] fallo en {p} -> {e}")
+
+    if dfs:
+        combined = pd.concat(dfs, ignore_index=True)
+    else:
+        combined = pd.DataFrame(columns=["model_path", "model_id", "condition", "status", "biomass"])
+    return combined
+
 if __name__ == "__main__":
-    run_fba()
+    # Lista rutas aquí:
+    model_paths = [
+        "B.-subtilis-FBA\Models\iYO844.xml",
+        "B.-subtilis-FBA\Models\iBsu1103_bigg.xml",
+        "B.-subtilis-FBA\Models\iBsu1103v2_bigg.xml",
+        "B.-subtilis-FBA\Models\iBsu1147.xml",
+        "B.-subtilis-FBA\Models\ec_iYO844_bigg.xml",
+        "B.-subtilis-FBA\Models\iBB1018.xml",
+        "B.-subtilis-FBA\Models\ecBSU1.xml",
+        "B.-subtilis-FBA\Models\iBsu1147R.xml",
+        "B.-subtilis-FBA\Models\pan_model_bigg.xml",
+       
+    ]
+
+    resultados_df = run_multiple_models(model_paths, parallel=False)
+    print(resultados_df)
+
+    # Guardar resultado combinado
+    resultados_df.to_csv("resultados_biomasa_por_modelo.csv", index=False)

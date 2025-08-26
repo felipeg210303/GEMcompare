@@ -1,24 +1,15 @@
 import cobra
-import matplotlib.pyplot as plt
 
-# Cargar el modelo metabólico (iYO844)
-model = cobra.io.read_sbml_model("C:/Users/felip/Desktop/python/TESIS/iYO844.xml")
+# Cargar el modelo metabólico (
+model = cobra.io.read_sbml_model("B.-subtilis-FBA\\iYO844\\iYO844_bigg.xml")
 
+# Flujos de condiciones experimentales
+model.reactions.get_by_id("ex_glc__d_e").lower_bound = -7.71  # Consumo de glucosa
+model.reactions.get_by_id("o2tu").lower_bound = -18  # Consumo de O2
+    
 # Optimizar el modelo usando FBA
+
 solution = model.optimize()
 print(f"Objective value: {solution.objective_value}")
+print(f"Acetate production: {solution.fluxes['ACts']}")
 
-# Obtener y filtrar los flujos significativos
-fluxes = solution.fluxes
-fluxes_filtered = fluxes[abs(fluxes) > 1e-6]  # Filtrar flujos cercanos a 0
-
-# Graficar los flujos metabólicos principales
-plt.figure(figsize=(10, 6))
-fluxes.plot(kind="barh", color="orange")
-plt.axvline(0, color='grey', lw=0.8)
-plt.xlim(-40, 100)  # Establece los límites del eje x
-plt.title("Flujos de Reacción en Bacillus subtilis")
-plt.xlabel("Flujo")
-plt.ylabel("Reacciones")
-plt.grid(axis='x')
-plt.show()
