@@ -3,12 +3,12 @@
 
 import libsbml
 
-model_path = "C:\\Users\\felip\\Desktop\\python\\B.-subtilis-FBA\\Initial models\\iYO844\\iYO844.xml" #Path to your model file
+model_path = "B.-subtilis-FBA\Models\iYO844.xml" #Path to your model file
 
 reader = libsbml.SBMLReader() #Create a new reader object
 document = reader.readSBML(model_path) # Read the SBML file
 
-if document.getNumErrors() > 0: #Verifying errors
+if document.getNumErrors() > 0: #Verifying errors when reading the file
     print("Errors found in the SBML document:")
     document.printErrors()
 else:
@@ -20,6 +20,6 @@ if num_errors > 0: #Show the errors found in the model
     print(f"{num_errors} errors found in the model:")
     for i in range(num_errors):
         error = document.getError(i)
-        print(f"[{i+1}] Level {error.getSeverity()} - {error.getMessage()}")
+        print(f"[{i+1}] Level {error.getSeverity()} - {error.getMessage()}") # Prints error index, severity and what it is
 else:
     print("Model is consistent")

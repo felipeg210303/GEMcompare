@@ -5,7 +5,7 @@ import pandas as pd
 # 1) Cargar tu modelo
 # ================================
 # Cambia la ruta/archivo a tu modelo real (.xml/.json/.mat) 
-model = cobra.io.read_sbml_model("B.-subtilis-FBA\\Initial models\\iBsu1103v2\\iBsu1103v2.xml")
+model = cobra.io.read_sbml_model(r"C:\Users\felip\Desktop\python\B.-subtilis-FBA\Models\iYO844.xml")
 
 # ================================
 # 2) Utilidades
