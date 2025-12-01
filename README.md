@@ -1,18 +1,52 @@
-# B. subtilis FBA
+# GEMcompare
 
-Here we are going to develop a repository of genome-scale metabolic models (GEMs) available for *Bacillus subtilis* which are reviewed and well documented. We are also going to include some use cases and examples for each model and compare the results obtained between models with the computational tool of Flux Balance Analysis (FBA) performed in python using the library "cobrapy" based in COnstraint Based Reconstruction and Analysis (COBRA) and with experimental data.
+## Table of Contents
+- [Overview](#overview)
+- [Installation](#installation)
+- [Content](#content)
+- [Contact](#contact)
+- [License](#license)
 
-Objectives of this repository: 
+---
 
-	*To make genome-scale metabolic models (GEMs) of Bacillus subtilis easily accesible and comprehensible in one single place even for people with low programming skills and allow them to make hypothesis with the use of this models and Flux Balance Analysis (FBA).
+## Overview
 
-	*To elaborate a in silico experimental protocol for the use of genome-scale metabolico models (GEMs) of *Bacillus subtilis*.
+**GEMcompare** is a two-stage computational pipeline designed for the preparation and comparison of **genome-scale metabolic models (GEMs)**, with a focus on *Bacillus subtilis*.  
+This repository also functions as a centralized collection of curated GEMs for this organism.
 
-	*To compare some of the available GEMs of *Bacillus subtilis* using the proposed protocol as pipeline.
+This repository serves three main purposes:
 
-You can find the tutorials and documentation for the use of this repository in the following Jupyter Notebooks: <>
+1. **Model repository** – It compiles most publicly available *B. subtilis* GEMs in one place.  
+2. **Preparation pipeline (`1_Preparation`)** – Standardizes, validates, and formats GEMs to ensure they are comparable across tools and formats.  
+3. **Comparison pipeline (`2_Comparison`)** – Performs structural and functional comparisons, flux balance analysis, carbon-source simulations, and gene essentiality predictions.
 
-The associated scientfic paper can be found in the following link: <>
+The pipeline has been tested with the following *B. subtilis* GEMs:
 
+- **iYO844**  
+- **iBB1018**  
+- **iBsu1147R**
 
-In case you need any help you can contact me at: <gr.gabriel@javeriana.edu.co>
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/<your-username>/GEMcompare.git
+cd GEMcompare
+
+Install dependencies:
+pip install -r requirements.txt
+```
+## Content
+
+## Contact
+The associated undergraduate thesis project can be found at:
+<insert-link-here>
+
+If you need help or have any questions about the pipeline, feel free to reach out:
+📧 gr.gabriel@javeriana.edu.co
+
+## License
+The software licensed under the MIT license.
