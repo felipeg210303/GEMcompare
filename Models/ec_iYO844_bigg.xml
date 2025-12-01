@@ -6312,7 +6312,7 @@
           <speciesReference species="M_abt_L_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="R_EX_ac__40__e__41__" id="R_EX_ac__40__e__41__" name="Acetate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
+      <reaction metaid="R_EX_ac_e" id="R_EX_ac_e" name="Acetate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
         <listOfReactants>
           <speciesReference species="M_ac_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -6337,7 +6337,7 @@
           <speciesReference species="M_acnam_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="R_EX_actn_R__40__e__41__" id="R_EX_actn_R__40__e__41__" name=" R Acetoin exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
+      <reaction metaid="R_EX_actn__R_e" id="R_EX_actn__R_e" name=" R Acetoin exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
         <listOfReactants>
           <speciesReference species="M_actn_R_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -6542,7 +6542,7 @@
           <speciesReference species="M_chor_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="R_EX_cit__40__e__41__" id="R_EX_cit__40__e__41__" name="Citrate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
+      <reaction metaid="R_EX_cit_e" id="R_EX_cit_e" name="Citrate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
         <listOfReactants>
           <speciesReference species="M_cit_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -6762,7 +6762,7 @@
           <speciesReference species="M_glc_D_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="R_EX_glcn_D_e" id="R_EX_glcn_D_e" name="D Gluconate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
+      <reaction metaid="R_EX_glcn__D_e" id="R_EX_glcn__D_e" name="D Gluconate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
         <listOfReactants>
           <speciesReference species="M_glcn_D_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -6787,7 +6787,7 @@
           <speciesReference species="M_glu_D_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="R_EX_glu_L_e" id="R_EX_glu_L_e" name="L Glutamate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
+      <reaction metaid="R_EX_glu__L_e" id="R_EX_glu__L_e" name="L Glutamate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
         <listOfReactants>
           <speciesReference species="M_glu_L_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -6992,7 +6992,7 @@
           <speciesReference species="M_mal_D_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="R_EX_mal_L_e" id="R_EX_mal_L_e" name="L Malate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
+      <reaction metaid="R_EX_mal__L_e" id="R_EX_mal__L_e" name="L Malate exchange" reversible="false" fast="false" fbc:lowerFluxBound="FB4N0" fbc:upperFluxBound="FB22N1000">
         <listOfReactants>
           <speciesReference species="M_mal_L_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -7092,7 +7092,7 @@
           <speciesReference species="M_mso3_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="R_EX_na1__40__e__41__" id="R_EX_na1__40__e__41__" name="Sodium exchange" reversible="true" fast="false" fbc:lowerFluxBound="FB1N1000" fbc:upperFluxBound="FB22N1000">
+      <reaction metaid="R_EX_na1_e" id="R_EX_na1_e" name="Sodium exchange" reversible="true" fast="false" fbc:lowerFluxBound="FB1N1000" fbc:upperFluxBound="FB22N1000">
         <listOfReactants>
           <speciesReference species="M_na1_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -19141,12 +19141,12 @@
           <groups:member groups:idRef="R_EX_Larab__40__e__41__"/>
           <groups:member groups:idRef="R_EX_Lcyst__40__e__41__"/>
           <groups:member groups:idRef="R_EX_abt__40__e__41__"/>
-          <groups:member groups:idRef="R_EX_ac__40__e__41__"/>
+          <groups:member groups:idRef="R_EX_ac_e"/>
           <groups:member groups:idRef="R_EX_acac__40__e__41__"/>
           <groups:member groups:idRef="R_EX_acgam__40__e__41__"/>
           <groups:member groups:idRef="R_EX_acmana__40__e__41__"/>
           <groups:member groups:idRef="R_EX_acnam__40__e__41__"/>
-          <groups:member groups:idRef="R_EX_actn_R__40__e__41__"/>
+          <groups:member groups:idRef="R_EX_actn__R_e"/>
           <groups:member groups:idRef="R_EX_ade__40__e__41__"/>
           <groups:member groups:idRef="R_EX_adn__40__e__41__"/>
           <groups:member groups:idRef="R_EX_akg__40__e__41__"/>
@@ -19187,7 +19187,7 @@
           <groups:member groups:idRef="R_EX_chol__40__e__41__"/>
           <groups:member groups:idRef="R_EX_chols__40__e__41__"/>
           <groups:member groups:idRef="R_EX_chor__40__e__41__"/>
-          <groups:member groups:idRef="R_EX_cit__40__e__41__"/>
+          <groups:member groups:idRef="R_EX_cit_e"/>
           <groups:member groups:idRef="R_EX_citr"/>
           <groups:member groups:idRef="R_EX_cmp__40__e__41__"/>
           <groups:member groups:idRef="R_EX_co2_e"/>
@@ -19231,12 +19231,12 @@
           <groups:member groups:idRef="R_EX_gam__40__e__41__"/>
           <groups:member groups:idRef="R_EX_gbbtn__40__e__41__"/>
           <groups:member groups:idRef="R_EX_glc__D_e"/>
-          <groups:member groups:idRef="R_EX_glcn_D_e"/>
+          <groups:member groups:idRef="R_EX_glcn__D_e"/>
           <groups:member groups:idRef="R_EX_glcr__40__e__41__"/>
           <groups:member groups:idRef="R_EX_glcur__40__e__41__"/>
           <groups:member groups:idRef="R_EX_gln_L__40__e__41__"/>
           <groups:member groups:idRef="R_EX_glu_D__40__e__41__"/>
-          <groups:member groups:idRef="R_EX_glu_L_e"/>
+          <groups:member groups:idRef="R_EX_glu__L_e"/>
           <groups:member groups:idRef="R_EX_glx__40__e__41__"/>
           <groups:member groups:idRef="R_EX_gly_asn_L__40__e__41__"/>
           <groups:member groups:idRef="R_EX_gly_asp_L__40__e__41__"/>
@@ -19277,7 +19277,7 @@
           <groups:member groups:idRef="R_EX_lys_L__40__e__41__"/>
           <groups:member groups:idRef="R_EX_madg__40__e__41__"/>
           <groups:member groups:idRef="R_EX_mal_D__40__e__41__"/>
-          <groups:member groups:idRef="R_EX_mal_L_e"/>
+          <groups:member groups:idRef="R_EX_mal__L_e"/>
           <groups:member groups:idRef="R_EX_malt__40__e__41__"/>
           <groups:member groups:idRef="R_EX_malttr__40__e__41__"/>
           <groups:member groups:idRef="R_EX_man1p__40__e__41__"/>
@@ -19297,7 +19297,7 @@
           <groups:member groups:idRef="R_EX_mobd__40__e__41__"/>
           <groups:member groups:idRef="R_EX_mops__40__e__41__"/>
           <groups:member groups:idRef="R_EX_mso3__40__e__41__"/>
-          <groups:member groups:idRef="R_EX_na1__40__e__41__"/>
+          <groups:member groups:idRef="R_EX_na1_e"/>
           <groups:member groups:idRef="R_EX_nac__40__e__41__"/>
           <groups:member groups:idRef="R_EX_nh4_e"/>
           <groups:member groups:idRef="R_EX_ni2__40__e__41__"/>

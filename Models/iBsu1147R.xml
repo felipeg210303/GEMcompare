@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <sbml xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:fbc="http://www.sbml.org/sbml/level3/version1/fbc/version2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core" level="3" sboTerm="SBO:0000624" version="1" xmlns="http://www.sbml.org/sbml/level3/version1/core" fbc:required="false">
-  <model fbc:strict="true">
+  <model metaid="meta_iBsu1147R" id="iBsu1147R" fbc:strict="true">
     <listOfUnitDefinitions>
       <unitDefinition id="mmol_per_gDW_per_hr">
         <listOfUnits>
@@ -21,7 +21,7 @@
       <parameter constant="true" id="cobra_default_lb" sboTerm="SBO:0000626" units="mmol_per_gDW_per_hr" value="-1000" />
       <parameter constant="true" id="cobra_default_ub" sboTerm="SBO:0000626" units="mmol_per_gDW_per_hr" value="1000" />
       <parameter constant="true" id="cobra_0_bound" sboTerm="SBO:0000626" units="mmol_per_gDW_per_hr" value="0" />
-      <parameter constant="true" id="R_EX_glc__D_e_lower_bound" sboTerm="SBO:0000625" units="mmol_per_gDW_per_hr" value="-0" />
+      <parameter constant="true" id="R_EX_glc__D_e_lower_bound" sboTerm="SBO:0000625" units="mmol_per_gDW_per_hr" value="-7.7" />
       <parameter constant="true" id="R_ATPM_upper_bound" sboTerm="SBO:0000625" units="mmol_per_gDW_per_hr" value="5.85" />
       <parameter constant="true" id="R_ATPM_lower_bound" sboTerm="SBO:0000625" units="mmol_per_gDW_per_hr" value="5.85" />
     </listOfParameters>
@@ -35404,13 +35404,13 @@
           <speciesReference constant="true" species="M_ribflv_e" stoichiometry="1" />
         </listOfReactants>
       </reaction>
-      <reaction fast="false" id="R_EX_glcn_e" metaid="R_EX_glcn_e" name="D-Gluconic acid exchange" reversible="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction fast="false" id="R_EX_glcn__D_e" metaid="R_EX_glcn__D_e" name="D-Gluconic acid exchange" reversible="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <sbml:annotation>
           <rdf:RDF>
-            <rdf:Description rdf:about="#R_EX_glcn_e">
+            <rdf:Description rdf:about="#R_EX_glcn__D_e">
               <bqbiol:is>
                 <rdf:Bag>
-                  <rdf:li rdf:resource="http://identifiers.org/bigg.reaction/EX_glcn_e" />
+                  <rdf:li rdf:resource="http://identifiers.org/bigg.reaction/EX_glcn__D_e" />
                 </rdf:Bag>
               </bqbiol:is>
             </rdf:Description>
@@ -39823,14 +39823,14 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
-          <speciesReference constant="true" species="M_atp_c" stoichiometry="1" />
-          <speciesReference constant="true" species="M_coa_c" stoichiometry="1" />
-          <speciesReference constant="true" species="M_succ_c" stoichiometry="1" />
-        </listOfReactants>
-        <listOfProducts>
           <speciesReference constant="true" species="M_adp_c" stoichiometry="1" />
           <speciesReference constant="true" species="M_pi_c" stoichiometry="1" />
           <speciesReference constant="true" species="M_succoa_c" stoichiometry="1" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference constant="true" species="M_atp_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_coa_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_succ_c" stoichiometry="1" />
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:and>
@@ -42971,10 +42971,10 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
-          <speciesReference constant="true" species="M_g3p_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_dhap_c" stoichiometry="1" />
         </listOfReactants>
         <listOfProducts>
-          <speciesReference constant="true" species="M_dhap_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_g3p_c" stoichiometry="1" />
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:or>
@@ -43199,10 +43199,10 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
-          <speciesReference constant="true" species="M_r5p_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_ru5p__D_c" stoichiometry="1" />
         </listOfReactants>
         <listOfProducts>
-          <speciesReference constant="true" species="M_ru5p__D_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_r5p_c" stoichiometry="1" />
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:geneProductRef fbc:geneProduct="G_BSU36920" />
@@ -43445,11 +43445,11 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
-          <speciesReference constant="true" species="M_mal__L_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_fum_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_h2o_c" stoichiometry="1" />        
         </listOfReactants>
         <listOfProducts>
-          <speciesReference constant="true" species="M_fum_c" stoichiometry="1" />
-          <speciesReference constant="true" species="M_h2o_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_mal__L_c" stoichiometry="1" />
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:geneProductRef fbc:geneProduct="G_BSU33040" />
@@ -45449,13 +45449,13 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
+          <speciesReference constant="true" species="M_13dpg_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_adp_c" stoichiometry="1" />
+        </listOfReactants>
+        <listOfProducts>
           <speciesReference constant="true" species="M_3pg_c" stoichiometry="1" />
           <speciesReference constant="true" species="M_atp_c" stoichiometry="1" />
           <speciesReference constant="true" species="M_h_c" stoichiometry="1" />
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference constant="true" species="M_13dpg_c" stoichiometry="1" />
-          <speciesReference constant="true" species="M_adp_c" stoichiometry="1" />
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:geneProductRef fbc:geneProduct="G_BSU33930" />
@@ -45552,10 +45552,10 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
-          <speciesReference constant="true" species="M_2pg_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_3pg_c" stoichiometry="1" />
         </listOfReactants>
         <listOfProducts>
-          <speciesReference constant="true" species="M_3pg_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_2pg_c" stoichiometry="1" />
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:geneProductRef fbc:geneProduct="G_BSU33910" />
@@ -46225,12 +46225,13 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
-          <speciesReference constant="true" species="M_g3p_c" stoichiometry="1" />
-          <speciesReference constant="true" species="M_s7p_c" stoichiometry="1" />
-        </listOfReactants>
-        <listOfProducts>
           <speciesReference constant="true" species="M_r5p_c" stoichiometry="1" />
           <speciesReference constant="true" species="M_xu5p__D_c" stoichiometry="1" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference constant="true" species="M_g3p_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_s7p_c" stoichiometry="1" />
+
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:geneProductRef fbc:geneProduct="G_BSU17890" />
@@ -47272,12 +47273,12 @@
           </rdf:RDF>
         </sbml:annotation>
         <listOfReactants>
-          <speciesReference constant="true" species="M_f6p_B_c" stoichiometry="1" />
-          <speciesReference constant="true" species="M_g3p_c" stoichiometry="1" />
-        </listOfReactants>
-        <listOfProducts>
           <speciesReference constant="true" species="M_e4p_c" stoichiometry="1" />
           <speciesReference constant="true" species="M_xu5p__D_c" stoichiometry="1" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference constant="true" species="M_f6p_B_c" stoichiometry="1" />
+          <speciesReference constant="true" species="M_g3p_c" stoichiometry="1" />
         </listOfProducts>
         <fbc:geneProductAssociation>
           <fbc:geneProductRef fbc:geneProduct="G_BSU17890" />

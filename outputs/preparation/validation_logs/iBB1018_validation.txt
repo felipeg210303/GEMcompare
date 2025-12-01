@@ -1,0 +1,7 @@
+Validation report for: Models/iBB1018.xml
+============================================================
+
+Check: Internal consistency - PASS
+
+Check: SBML L3v2 compatibility - PASS
+

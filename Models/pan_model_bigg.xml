@@ -5034,7 +5034,7 @@
           <fbc:geneProductRef fbc:geneProduct="G_EX"/>
         </fbc:geneProductAssociation>
       </reaction>
-      <reaction id="R_ACts__126__" name="Acetate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction id="R_EX_ac_e" name="Acetate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_ac_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -5098,7 +5098,7 @@
           <fbc:geneProductRef fbc:geneProduct="G_EX"/>
         </fbc:geneProductAssociation>
       </reaction>
-      <reaction id="R_ACTN__R_Et" name="EX actn R LPAREN e RPAREN" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction id="R_EX_actn__R_e" name="EX actn R LPAREN e RPAREN" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_actn__R_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -5434,7 +5434,7 @@
           <fbc:geneProductRef fbc:geneProduct="G_EX"/>
         </fbc:geneProductAssociation>
       </reaction>
-      <reaction id="R_R_CITtex" name="Citrate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction id="R_EX_cit_e" name="Citrate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_cit_e" stoichiometry="1" constant="true"/>
         </listOfReactants>

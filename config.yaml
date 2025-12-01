@@ -1,0 +1,92 @@
+# config.yaml
+preparation:
+  models:
+      - Models/iYO844.xml
+      - Models/iBB1018.xml
+      - Models/iBsu1147R.xml
+  verbose: true   
+
+  translation:
+    run: false                 
+    translation_db: "bigg"     
+    output_dir: "outputs/preparation/translated_models"
+    output_name: null         
+    force: true
+
+  validation:
+    run: true
+    output_dir: "outputs/preparation/validation_logs"
+    output_name: null        
+    force: true
+
+  quality:
+    run: true
+    output_dir: "QualityReports"
+    output_name: null
+    force: true
+
+  media:
+    run: true
+    excel_file: "Pipeline/1_Preparation/Culture_media.xlsx"
+    sheet_name: "Minimal_iBsu1147"
+    output_dir: "outputs/prepared_models"
+    output_name: null          
+    force: true
+    verbose: true
+
+comparison:
+
+  models:
+       - Models/iYO844.xml
+       - Models/iBB1018.xml
+       - Models/iBsu1147R.xml
+  verbose: true
+  force: true
+
+  structural:
+    run: true
+    output_dir: "outputs/comparison/structural"
+    output_name: "Structural"
+    verbose: true
+    force: true
+
+  functional:
+    run: true
+    output_dir: "outputs/comparison/functional"
+    output_name: "Functional"
+    pathways:
+      EMP: ["GLCpts", "PGI", "PFK","FBA", "TPI","GAPD","PGK","PGM","ENO", "PYK"]
+      TCA: ["CS", "ACONT", "ICDHyr","AKGDH","SUCOAS", "SUCD1", "FUM", "MDH","PDH","PC"]
+      PPP: ["G6PDH2r","PGL","GND","RPI","RPE","TKT1","TALA","TKT2"]
+    verbose: true
+    force: true
+
+  carbon_sources:
+    run: true
+    output_dir: "outputs/comparison/carbons"
+    output_name: "Carbon_Sources"
+
+    uptake: 5.0
+    verbose: true
+    force: true
+
+  gene_essentiality:
+    run: true
+    dataset: "Pipeline/2_Comparison/Essentiality_dataset.xlsx"
+    locus_column: "genomic_annotation.locus_tag"
+    essential_column: "essential"
+    output_dir: "outputs/comparison/gene_essentiality"
+    output_name: "GeneEssentiality"
+    processes: 4
+    verbose: true
+    force: true
+
+  biolog:
+    run: false
+    carbon_file: "Pipeline/2_Comparison/CarbonUtilization.xlsx"
+    output_path: "Pipeline/2_Comparison/Carbon_Utilization_Results.xlsx"
+    uptake: 7.5
+    processes: 4 
+    threshold: 1.0e-3
+    verbose: true
+    force: true

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <sbml xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:fbc="http://www.sbml.org/sbml/level3/version1/fbc/version2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core" level="3" sboTerm="SBO:0000624" version="1" xmlns="http://www.sbml.org/sbml/level3/version1/core" fbc:required="false">
-  <model fbc:strict="true">
+  <model metaid="meta_iBsu1147" id="iBsu1147" fbc:strict="true">
     <listOfUnitDefinitions>
       <unitDefinition id="mmol_per_gDW_per_hr">
         <listOfUnits>
@@ -21585,13 +21585,13 @@
           <speciesReference constant="true" species="M_ribflv_e" stoichiometry="1" />
         </listOfReactants>
       </reaction>
-      <reaction fast="false" id="R_EX_glcn_e" metaid="R_EX_glcn_e" name="Exchange" reversible="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction fast="false" id="R_EX_glcn__D_e" metaid="R_EX_glcn__D_e" name="Exchange" reversible="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <sbml:annotation>
           <rdf:RDF>
-            <rdf:Description rdf:about="#R_EX_glcn_e">
+            <rdf:Description rdf:about="#R_EX_glcn__D_e">
               <bqbiol:is>
                 <rdf:Bag>
-                  <rdf:li rdf:resource="http://identifiers.org/bigg.reaction/EX_glcn_e" />
+                  <rdf:li rdf:resource="http://identifiers.org/bigg.reaction/EX_glcn__D_e" />
                 </rdf:Bag>
               </bqbiol:is>
             </rdf:Description>
